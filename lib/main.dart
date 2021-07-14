@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './widgets/user_purchases.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -13,15 +14,28 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Flutter App'),
       ),
-      body: Center(
-        child: Text('Widget Playground!'),
-      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15,),
+            width: double.infinity,
+            child: Card(
+              color: Colors.red,
+              child: Text('Chart'), 
+              elevation: 5,
+            ),
+          ),
+          UserPurchases()
+        ],
+        ),
     );
   }
 }
