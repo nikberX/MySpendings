@@ -31,7 +31,7 @@ class Chart extends StatelessWidget {
 
         return {'day' : DateFormat.E().format(weekDays).substring(0,1), 'amount' : sumOfAmounts};
       }
-    );
+    ).reversed.toList();
   }
 
   double get _sumOfTotal {

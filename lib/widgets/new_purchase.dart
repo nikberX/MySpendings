@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewPurchase extends StatefulWidget {
 
@@ -12,8 +13,8 @@ class NewPurchase extends StatefulWidget {
 
 class _NewPurchaseState extends State<NewPurchase> {
   final titleController = TextEditingController();
-
   final amountController = TextEditingController();
+  DateTime? _selectedDate;
 
   void submitData() {
     if (titleController.text.isEmpty || amountController.text.isEmpty) {
@@ -29,6 +30,19 @@ class _NewPurchaseState extends State<NewPurchase> {
     Navigator.of(context).pop();
   }
 
+  void _presentDatePicker() {
+    showDatePicker(
+      context: context, 
+      initialDate: DateTime.now(),  
+      firstDate: DateTime(2020), 
+      lastDate: DateTime.now()
+      ).then((pickedDate) {
+        if (pickedDate == null) return;
+
+        _selectedDate = pickedDate;
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -40,18 +54,41 @@ class _NewPurchaseState extends State<NewPurchase> {
                   children: <Widget>[
                     TextField(
                       decoration: InputDecoration(
-                        labelText: 'Title',
+                        labelText: 'Название',
                       ),
                       controller: titleController,
                       onSubmitted: (_) => submitData(),
                     ),
                     TextField(
                       decoration: InputDecoration(
-                        labelText: 'Amount',
+                        labelText: 'Стоимость',
                       ),
                       keyboardType: TextInputType.number,
                       controller: amountController,
                       onSubmitted: (_) => submitData(),
+                    ),
+                    Container(
+                      height: 70,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            null == _selectedDate ? 
+                            'Дата не выбрана!' 
+                            : 
+                            DateFormat.yMd().format(_selectedDate as DateTime)
+                            ),
+                          Card(
+                            elevation: 2,
+                            child: FlatButton(
+                              onPressed: _presentDatePicker, 
+                              child: Text(
+                                'Выбрать дату',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                ), 
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                     FlatButton(
                       onPressed: () => submitData(),
@@ -63,7 +100,7 @@ class _NewPurchaseState extends State<NewPurchase> {
                           fontWeight: FontWeight.bold,
                         ),
                       )
-                    )
+                    ),
                   ],
                 ),
             ),

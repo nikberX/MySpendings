@@ -34,41 +34,35 @@ class PurchaseList extends StatelessWidget {
       ListView.builder( // Not empty, false
         itemBuilder: (context, index) {
                   return Card(
-                    child: Row(children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10,vertical: 15),
+                    elevation: 5,
+                    margin: EdgeInsets.symmetric(vertical: 7, horizontal: 4),
+                    child: ListTile(
+                      leading: Container(
+                        height: 80,
+                        width: 120,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.yellow, width: 3,),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: Colors.yellow,
                         ),
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          '${_purchases[index].amount.toStringAsFixed(2)} Руб.',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.green,
-                          ),
+                        child: Padding(
+                          padding: EdgeInsets.all(4),
+                          child: FittedBox(
+                            child: Text('${_purchases[index].amount.toStringAsFixed(2)} руб.',
+                            style: TextStyle(
+                              color: Colors.green, 
+                              fontWeight: FontWeight.bold,
+                              fontSize: 26,
+                              ),
+                            )
+                          ), 
                         ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                        
-                        Text(
-                          _purchases[index].title,
-                          style: Theme.of(context).textTheme.title,
-                        ),
-                        Text(
-                          DateFormat('yMMMd').format(_purchases[index].date),
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xA1000000) , //black
-                          ),
-                        ),
-                      ],
-                      )
-                    ],
-                    )
+                      title: Text(
+                        '${_purchases[index].title}',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                      subtitle: Text(DateFormat.yMMMd().format(_purchases[index].date)),
+                    ),
                   );
                 },
         itemCount: _purchases.length,
