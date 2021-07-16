@@ -1,13 +1,33 @@
 import 'package:flutter/material.dart';
 
-class NewPurchase extends StatelessWidget {
+class NewPurchase extends StatefulWidget {
 
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
-  
   final Function onButtonPressed;
 
   NewPurchase(this.onButtonPressed);
+
+  @override
+  _NewPurchaseState createState() => _NewPurchaseState();
+}
+
+class _NewPurchaseState extends State<NewPurchase> {
+  final titleController = TextEditingController();
+
+  final amountController = TextEditingController();
+
+  void submitData() {
+    if (titleController.text.isEmpty || amountController.text.isEmpty) {
+      return;
+    }
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.parse(amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount < 0) {
+      return;
+    }
+    widget.onButtonPressed(enteredTitle, enteredAmount);
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +43,18 @@ class NewPurchase extends StatelessWidget {
                         labelText: 'Title',
                       ),
                       controller: titleController,
+                      onSubmitted: (_) => submitData(),
                     ),
-                    TextField(decoration: InputDecoration(
+                    TextField(
+                      decoration: InputDecoration(
                         labelText: 'Amount',
                       ),
+                      keyboardType: TextInputType.number,
                       controller: amountController,
+                      onSubmitted: (_) => submitData(),
                     ),
                     FlatButton(
-                      onPressed: () {onButtonPressed(titleController.text,amountController.text);},
+                      onPressed: () => submitData(),
                       child: Text(
                         'Submit',
                         style: TextStyle(
