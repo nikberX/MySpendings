@@ -47,11 +47,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   final List<Purchase> _userPurchases = [
-    Purchase(id: '1', title: 'Автобус', amount: 46.01, date:  DateTime.now()),
-    Purchase(id: '1', title: 'Ягоды', amount: 470, date:  DateTime.now().subtract(Duration(days: 2))),
-    Purchase(id: '1', title: 'Лента', amount: 653, date:  DateTime.now().subtract(Duration(days: 1))),
-    Purchase(id: '1', title: 'ФиксПрайс', amount: 253, date:  DateTime.now()),
-    Purchase(id: '1', title: 'Ярче', amount: 200, date:  DateTime.now()),
+    //Purchase(id: '1', title: 'Автобус', amount: 46.01, date:  DateTime.now().subtract(Duration(days: 3))),
+    //Purchase(id: '1', title: 'Ягоды', amount: 470, date:  DateTime.now().subtract(Duration(days: 2))),
+    //Purchase(id: '1', title: 'Лента', amount: 653, date:  DateTime.now().subtract(Duration(days: 1))),
+    //Purchase(id: '1', title: 'ФиксПрайс', amount: 253, date:  DateTime.now().subtract(Duration(days: 1))),
+    //Purchase(id: '1', title: 'Ярче', amount: 200, date:  DateTime.now()),
   ];
 
   List<Purchase> get _recentPurchases {
@@ -107,9 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 width: double.infinity,
                 child: Card(
-                  color: Theme.of(context).primaryColor,
                   child: Chart(_recentPurchases), 
-                  elevation: 5,
+                  elevation: 0,
                 ),
               ),
               PurchaseList(_userPurchases),

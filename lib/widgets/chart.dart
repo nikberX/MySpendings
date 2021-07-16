@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../models/purchase.dart';
+import './chart_bar.dart';
 
 class Chart extends StatelessWidget {
   final List<Purchase> recentPurchases;
@@ -13,6 +14,7 @@ class Chart extends StatelessWidget {
     return List.generate(
       7, 
       (index) {
+        
         final weekDays = DateTime.now().subtract(Duration(days: index), );
 
         double sumOfAmounts = 0;
@@ -32,17 +34,36 @@ class Chart extends StatelessWidget {
     );
   }
 
+  double get _sumOfTotal {
+    double sum = 0;
+    for(var i = 0; i<recentPurchases.length;i++) {
+      sum+=recentPurchases[i].amount;
+    }
+    return sum;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
+      
       elevation: 6,
       margin: EdgeInsets.all(15),
-      child: Row(
-        children: groupedPurchasesValues.map(
-          (data) {
-            return Text('${data['day']}:${data['amount']} ');
-          }
-        ).toList(),
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: groupedPurchasesValues.map(
+            (data) {
+              return Flexible(
+                fit: FlexFit.tight,
+                child: ChartBar(
+                  data['day'] as String, 
+                  data['amount'] as double, 
+                  _sumOfTotal == 0 ? 0 : (data['amount'] as double) / _sumOfTotal),
+              );
+            }
+          ).toList(),
+        ),
       )
     );
   }
