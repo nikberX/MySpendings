@@ -101,7 +101,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    AppBar appBar = AppBar(
+    final mediaQuery = MediaQuery.of(context);
+
+
+    final appBar = AppBar(
         title: Text('Мои траты'),
         actions: <Widget>[
           IconButton(
@@ -111,11 +114,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
     );
 
-    bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
+
 
     var purchaseListWidget = Container(
-                height: (MediaQuery.of(context).size.height - 
-                         MediaQuery.of(context).padding.top -
+                height: (mediaQuery.size.height - 
+                         mediaQuery.padding.top -
                          appBar.preferredSize.height) * 0.7,
                 child: PurchaseList(_userPurchases,_removePurchase)
     );
@@ -138,8 +142,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
               if (!isLandscape) Container(
-                height: (MediaQuery.of(context).size.height - 
-                         MediaQuery.of(context).padding.top -
+                height: (mediaQuery.size.height - 
+                         mediaQuery.padding.top -
                          appBar.preferredSize.height) 
                          * 0.3,
                 width: double.infinity,
@@ -150,8 +154,8 @@ class _MyHomePageState extends State<MyHomePage> {
               if (!isLandscape) purchaseListWidget,
               if (isLandscape) _showChart  
               ? Container(
-                height: (MediaQuery.of(context).size.height - 
-                         MediaQuery.of(context).padding.top -
+                height: (mediaQuery.size.height - 
+                         mediaQuery.padding.top -
                          appBar.preferredSize.height) 
                          * 0.7,
                 width: double.infinity,
