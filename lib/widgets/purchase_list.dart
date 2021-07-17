@@ -6,14 +6,13 @@ import '../models/purchase.dart';
 
 class PurchaseList extends StatelessWidget {
   final List<Purchase> _purchases;
+  final Function onRemove;
 
-  PurchaseList(this._purchases);
+  PurchaseList(this._purchases, this.onRemove);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 350,
-      child: _purchases.isEmpty ? 
+    return  _purchases.isEmpty ? 
       Column( //is Empty, true
         children: <Widget>[
           Text(
@@ -62,11 +61,14 @@ class PurchaseList extends StatelessWidget {
                         style: Theme.of(context).textTheme.title,
                       ),
                       subtitle: Text(DateFormat.yMMMd().format(_purchases[index].date)),
+                      trailing: IconButton(
+                        onPressed: () {onRemove(_purchases[index].id);}, 
+                        icon: Icon(Icons.delete, color: Colors.yellow)
+                      ),
                     ),
                   );
                 },
         itemCount: _purchases.length,
-        ),
       );
   }
 }

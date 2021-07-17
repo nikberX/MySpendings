@@ -46,6 +46,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  
+
   final List<Purchase> _userPurchases = [
     //Purchase(id: '1', title: 'Автобус', amount: 46.01, date:  DateTime.now().subtract(Duration(days: 3))),
     //Purchase(id: '1', title: 'Ягоды', amount: 470, date:  DateTime.now().subtract(Duration(days: 2))),
@@ -74,6 +76,15 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _removePurchase(String id) {
+    setState(
+      () {
+      _userPurchases.removeWhere(
+        (element) => element.id == id
+      );
+    });
+  }
+
   void _startAddNewPurchase(BuildContext context) {
     showModalBottomSheet(
       context: context, 
@@ -90,8 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    AppBar appBar = AppBar(
         title: Text('Мои траты'),
         actions: <Widget>[
           IconButton(
@@ -99,19 +109,29 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {_startAddNewPurchase(context);},
           )
         ],
-      ),
+    );  
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
               Container(
+                height: (MediaQuery.of(context).size.height - 
+                         MediaQuery.of(context).padding.top -
+                         appBar.preferredSize.height) * 0.3,
                 width: double.infinity,
                 child: Card(
                   child: Chart(_recentPurchases), 
                   elevation: 0,
                 ),
               ),
-              PurchaseList(_userPurchases),
+              Container(
+                height: (MediaQuery.of(context).size.height - 
+                         MediaQuery.of(context).padding.top -
+                         appBar.preferredSize.height) * 0.7,
+                child: PurchaseList(_userPurchases,_removePurchase)
+                ),
             ],
             ),
       ),
