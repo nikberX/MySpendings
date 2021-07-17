@@ -45,65 +45,72 @@ class _NewPurchaseState extends State<NewPurchase> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-            elevation: 5,
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    TextField(
-                      decoration: InputDecoration(
-                        labelText: 'Название',
-                      ),
-                      controller: titleController,
-                      onSubmitted: (_) => submitData(),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        labelText: 'Стоимость',
-                      ),
-                      keyboardType: TextInputType.number,
-                      controller: amountController,
-                      onSubmitted: (_) => submitData(),
-                    ),
-                    Container(
-                      height: 70,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            null == _selectedDate ? 
-                            'Дата не выбрана!' 
-                            : 
-                            DateFormat.yMd().format(_selectedDate as DateTime)
-                            ),
-                          Card(
-                            elevation: 2,
-                            child: FlatButton(
-                              onPressed: _presentDatePicker, 
-                              child: Text(
-                                'Выбрать дату',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                ), 
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    FlatButton(
-                      onPressed: () => submitData(),
-                      child: Text(
-                        'Submit',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    ),
-                  ],
+    return SingleChildScrollView(
+      child: Card(
+              elevation: 5,
+              child: Container(
+                padding: EdgeInsets.only(
+                  top: 10,
+                  left: 10,
+                  right: 10,
+                  bottom: MediaQuery.of(context).viewInsets.bottom + 10
                 ),
-            ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      TextField(
+                        decoration: InputDecoration(
+                          labelText: 'Название',
+                        ),
+                        controller: titleController,
+                        onSubmitted: (_) => submitData(),
+                      ),
+                      TextField(
+                        decoration: InputDecoration(
+                          labelText: 'Стоимость',
+                        ),
+                        keyboardType: TextInputType.number,
+                        controller: amountController,
+                        onSubmitted: (_) => submitData(),
+                      ),
+                      Container(
+                        height: 70,
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              null == _selectedDate ? 
+                              'Дата не выбрана!' 
+                              : 
+                              DateFormat.yMd().format(_selectedDate as DateTime)
+                              ),
+                            Card(
+                              elevation: 2,
+                              child: FlatButton(
+                                onPressed: _presentDatePicker, 
+                                child: Text(
+                                  'Выбрать дату',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  ), 
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      FlatButton(
+                        onPressed: () => submitData(),
+                        child: Text(
+                          'Submit',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ),
+                    ],
+                  ),
+              ),
+      ),
     );
   }
 }
