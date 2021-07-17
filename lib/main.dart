@@ -46,7 +46,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  
+  bool _showChart = false;
 
   final List<Purchase> _userPurchases = [
     //Purchase(id: '1', title: 'Автобус', amount: 46.01, date:  DateTime.now().subtract(Duration(days: 3))),
@@ -109,29 +109,59 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {_startAddNewPurchase(context);},
           )
         ],
-    );  
+    );
+
+    bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
+    var purchaseListWidget = Container(
+                height: (MediaQuery.of(context).size.height - 
+                         MediaQuery.of(context).padding.top -
+                         appBar.preferredSize.height) * 0.7,
+                child: PurchaseList(_userPurchases,_removePurchase)
+    );
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-              Container(
+              if (isLandscape) Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('Show chart'),
+                  Switch(
+                    value: _showChart, 
+                    onChanged: (val) {setState(() {
+                      _showChart = val;
+                    });}
+                  )
+                ],
+              ),
+              if (!isLandscape) Container(
                 height: (MediaQuery.of(context).size.height - 
                          MediaQuery.of(context).padding.top -
-                         appBar.preferredSize.height) * 0.3,
+                         appBar.preferredSize.height) 
+                         * 0.3,
+                width: double.infinity,
+                child: Card(
+                  child: Chart(_recentPurchases), 
+                  elevation: 0,
+              )),
+              if (!isLandscape) purchaseListWidget,
+              if (isLandscape) _showChart  
+              ? Container(
+                height: (MediaQuery.of(context).size.height - 
+                         MediaQuery.of(context).padding.top -
+                         appBar.preferredSize.height) 
+                         * 0.7,
                 width: double.infinity,
                 child: Card(
                   child: Chart(_recentPurchases), 
                   elevation: 0,
                 ),
-              ),
-              Container(
-                height: (MediaQuery.of(context).size.height - 
-                         MediaQuery.of(context).padding.top -
-                         appBar.preferredSize.height) * 0.7,
-                child: PurchaseList(_userPurchases,_removePurchase)
-                ),
+              )
+              : purchaseListWidget
+              
             ],
             ),
       ),

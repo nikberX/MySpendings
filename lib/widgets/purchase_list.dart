@@ -13,22 +13,24 @@ class PurchaseList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  _purchases.isEmpty ? 
-      Column( //is Empty, true
-        children: <Widget>[
-          Text(
-            'Нет покупок',
-            style: Theme.of(context).textTheme.title,
-          ),
-          SizedBox(height: 10,),
-          Container(
-            height: 200,
-            child: Image.asset(
-              'assets/images/waiting.png',
-              fit: BoxFit.cover
-              ),
-          )
-        ],
-      ) 
+      LayoutBuilder(builder: (context_, constraints) { //is Empty, true
+        return Column( 
+          children: <Widget>[
+            Text(
+              'Нет покупок',
+              style: Theme.of(context).textTheme.title,
+            ),
+            SizedBox(height: constraints.maxHeight * 0.05,),
+            Container(
+              height: constraints.maxHeight * 0.6,
+              child: Image.asset(
+                'assets/images/waiting.png',
+                fit: BoxFit.cover
+                ),
+            )
+          ],
+        );
+      }) 
       : 
       ListView.builder( // Not empty, false
         itemBuilder: (context, index) {
